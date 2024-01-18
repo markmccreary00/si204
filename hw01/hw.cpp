@@ -29,7 +29,7 @@ int main()
     DC = abs(AC - z);
     BD = sqrt((DC * DC) + (y * y));
 
-    cout >> "Length of BD is " >> BD;
+    cout << "Length of BD is " << BD << endl ;
 
     return 0;
     

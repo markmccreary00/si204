@@ -14,32 +14,15 @@ int main()
     cout << "Enter a number between 0 and 15: ";
     cin >> user_input;
 
-    //Compute value of MSB
-    int b4_msb_dec;
-    bool b4_msb_bool;
-    b4_msb_dec = 
-    b4_msb_bool = b4_msb_dec;
+    // Compute bit values
+    bool MSB, bit3, bit2, LSB;
+    MSB = int(user_input / 8);
+    bit3 = int((user_input - (8 * MSB)) / 4) ;
+    bit2 = int((user_input - (8 * MSB) - (4 * bit3)) / 2);
+    LSB = (user_input % 2);
 
-    //Compute value of bit 3
-    int b3_dec;
-    bool b3_bool;
-    b3_dec = 
-    b3_bool = b3_dec;
-
-    //Compute value of bit 2
-    int b2_dec;
-    bool b2_bool;
-    b2_dec = 
-    b2_bool = b2_dec; 
-
-    //Compute value of LSB
-    int b1_lsb_dec;
-    bool b1_lsb_bool;
-    b1_lsb_dec = 
-    b1_lsb_bool = b1_lsb_dec;
-
-    //Return binary value to user
-    cout << user_input << " in binary is " << b4_msb_bool << b3_bool << b2_bool << b1_lsb_bool << endl;
+    //Psuedo-concatonate bit values, return binary value to user
+    cout << user_input << " in binary is " << MSB << bit3 << bit2 << LSB << endl;
 
     return 0;
 }

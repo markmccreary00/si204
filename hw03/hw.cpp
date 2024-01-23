@@ -14,8 +14,8 @@ int main()
     int f1, i1, f2, i2;
     char dump;
     cout << "Enter two lengths in feet and inches (larger first!)" << endl;
-    cin >> f1 >> dump >> i1 >> dump;
-    cin >> f2 >> dump >> i2 >> dump;
+    cin >> f1 >> dump >> i1 >> dump >> dump;
+    cin >> f2 >> dump >> i2 >> dump >> dump;
 
     //Compute difference & return result
     double x, y, x_in, y_in, delta_xy;
@@ -26,9 +26,9 @@ int main()
     y = f2 + y_in;
     delta_xy = x - y;
     output_ft = delta_xy;
-    output_in = (delta_xy - output_ft) * 12;
+    output_in = round((delta_xy - output_ft) * 12);
 
-    cout << "Difference is " << output_ft << " ' " << output_in << " \" ";
+    cout << "Difference is " << output_ft << "' " << output_in << "' '";
     return 0;
 
 }

@@ -9,64 +9,73 @@ using namespace std;
 
 int main()
 {
-	cout << "Enter three numbers: ";
+	cout << "Enter side lengths: ";
 	double a, b, c, l, s1, s2;
 	cin >> a >> b >> c;
     string anglerelation, lengthrelation;
 	
-	if(a>b) //Order inputs by length, s1 (shortest) < s2 < l (longest)
-	{
-		 s1 = b;
-		if(a>c)
-		{
-			l = a;
-			s2 = c;
-		}
-		else
-		{
-			l =c ;
-			 s2 = a;
-		}
-	}
+	if(a>=b && a>=c) //Determine longest side
+    {
+        l = a;
+    }
+    if(b>=a && b>=c)
+    {
+        l = b;
+    }
+    else
+    {
+        l = c;
+    }
 
-	else
-	{
-		s1 = a;
-		if(b>c)
-		{
-			l = b;
-			s2 = c;
-		}	
-		else
-		{
-			l = c;
-			s2 = b;
-		}
-	}
+    if(a<=b && a<=c) //Determine shorest side
+    {
+        s1 = a;
+    }
+    if(b<=a && b<=c)
+    {
+        s1 = b;
+    }
+    else
+    {
+        s1 = c;
+    }
+
+    if(a>=b && a<=c) //Determine middle length side
+    {
+        s2 = a;
+    }
+    if(b>=a and b<=c)
+    {
+        s2 = b;
+    }
+    else
+    {
+        s2 = c;
+    }
+
 	
     if(s1 + s2 <= l) //Check viability of triangle inequality
     {
         cout << "Error! these lengths violate the triangle inequality!" << endl;
         return 0;
     }
-
 	else //Classification logic goes here once inequality condition is met
     {
-       if(((s1 * s1) + (s2 * s2)) == (l * l) ) //This block determines angle relation (right, acute, obtuse)
-    {
-        anglerelation = "right";
-    }
-    else
-    {
-        if( ((s1 * s1) + (s2 * s2)) > (l * l))
+        if(((s1 * s1) + (s2 * s2)) == (l * l) ) //This block determines angle relation
         {
-            anglerelation = "acute";
+            anglerelation = "right";
         }
         else
         {
-            anglerelation = "obtuse";
+            if( ((s1 * s1) + (s2 * s2)) > (l * l))
+            {
+                anglerelation = "acute";
+            }
+            else
+            {
+                anglerelation = "obtuse";
+            }
         }
-    }
 
     if(s1 != s2 && s2 != l && s1 != l) //This block determines length relation
     {
@@ -83,8 +92,11 @@ int main()
             lengthrelation = "equilateral";
         }
     }
+
     }
 
+    //Return results to user
     cout << "This is a " << anglerelation << " " << lengthrelation << " triangle." << endl;
     return 0;
-	}
+	
+    }

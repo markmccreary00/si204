@@ -5,19 +5,14 @@ using namespace std;
 int main()
 {
 
-string s, t, r;
-
-cin >> s;
-if( s == "hello" )
+int p;
+p = 1;
+cout << &p << endl;
 {
-  cin >> t;
-  string s;
-  s = s + "." + t + ".world";
+  int p;
+  cout << &p << endl;
 }
-
-cin >> r;
-s = s + "." + r + ".programmers";
-cout << s << endl;
+cout << &p << endl;
 
 return 0;
 }

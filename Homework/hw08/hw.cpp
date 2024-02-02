@@ -45,6 +45,7 @@ int main()
         {
             break;
         }
+        
 
         //Calculate average, return name/average.
         double average = (0.2 * hw) + (0.2 * quiz) + (0.6 * exam);

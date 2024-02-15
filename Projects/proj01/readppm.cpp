@@ -39,4 +39,5 @@ int main(){ //Read in filename
         }
     }
     return 0;
+    fin.close();
 }

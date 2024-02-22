@@ -62,6 +62,7 @@ int main(){
             cout << endl;
         }
     }
+
     else{
 
         for(int j=0;j<((num/2)-1);j++)
@@ -90,9 +91,7 @@ int main(){
                 cout << ".";
 
             cout << endl;
+        }
     }
-    }
-
-    
     return 0;
 }

@@ -20,6 +20,8 @@ int main()
   int* A = read(N);
   print(A,N);
 
+  //The B array is an array of two elements, which are incremented up per each swap/reverse.
+  //This is used in line 27 to calculate points based on weight while retaining ability to count # of moves.
   int* B = play(A,N);
   
   cout << (3*B[0] + 2*B[1]) << " points! (" << (B[0] + B[1]) << " moves)" << endl;
@@ -73,6 +75,7 @@ bool isInOrder(int* A, int N)
             tracker++;
     }
     bool val = (tracker == N) ? true : false;
+    //Line 77 will only return true if EVERY loop of the for/if loop above returns true.
     return val;
 }
 
@@ -115,6 +118,7 @@ int* play(int* A, int N)
                 ind2_int = ind2_char - 65;
                 delta = 1 + (ind2_int - ind1_int);
 
+                //The C array is a temp array used to hold the values being reversed.
                 int*C = new int[delta];
 
                 for(int i = 0 ; i < delta ; i++)

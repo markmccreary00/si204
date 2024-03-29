@@ -3,7 +3,10 @@
     "ostream": "cpp",
     "iosfwd": "cpp",
     "iostream": "cpp",
-    "fstream": "cpp"
+    "fstream": "cpp",
+    "array": "cpp",
+    "string_view": "cpp",
+    "ranges": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

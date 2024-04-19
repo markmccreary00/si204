@@ -2,8 +2,6 @@
 Filename: p7.cpp
 Author: MIDN Mark McCreary (274230)
 Project 2, Part 7
-
-to do: make top card show at end of game
 */
 
 #include <iostream>
@@ -14,9 +12,9 @@ int* makeDeck();
 void deal(int* deck, int* hand, int* deckPos);
 void showHands(int* pHand, int* dHand);
 void print(int* hand, int i);
-bool playRound(int* deck, int* pHand, int* dHand, int* deckPos, int* rounds, char* lastCmd, int* gameStateCode);
+void playRound(int* deck, int* pHand, int* dHand, int* deckPos, int* rounds, char* lastCmd, int* gameStateCode);
+void updateGameState(int* pHand, int* dHand, char cmd, char* lastCmd, int* gameStateCode);
 int getScore(int* hand);
-int updateGameState(int* pHand, int* dHand, char cmd, char* lastCmd, int* gameStateCode);
 
 
 int main()
@@ -58,12 +56,61 @@ int main()
     }
    
     showHands(pHand, dHand);
+    
 
-    int pScore = 0, dScore = 0, rounds = 1, gameStateCode;
+    int rounds = 1, gameStateCode = -1;
+    //for gameStateCode: -1 = active game ; 0 = double stand, tie game ; 1 = double stand, player wins ; 2 ; double stand, dealer wins ; 3 = player wins ; 4 = dealer wins
     char lastCmd;
-    while(playRound(deck, pHand, dHand, &deckPos, &rounds, &lastCmd, &gameStateCode))
-        
+    while(gameStateCode == -1)
+    {
+        playRound(deck, pHand, dHand, &deckPos, &rounds, &lastCmd, &gameStateCode);
+
+        if(gameStateCode == 0)
+        {
+            delete[] deck;
+            int* deck = makeDeck();
+            for(int i = 0 ; i < 52 ; i++)
+            {
+                int j = rand() % 52;
+                int temp;
+                temp = deck[i];
+                deck[i] = deck[j];
+                deck[j] = temp;
+            }
+
+            deckPos = 0;
+            lastCmd = ' ';
+            delete[] pHand;
+            delete[] dHand;
+            int* dHand = new int[12]{0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1};
+            int* pHand = new int[12]{0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0};
+            gameStateCode = -1;
+            rounds = 1;
+
+            for(int i = 0 ; i < 2 ; i++)
+            {
+                deal(deck, pHand, &deckPos);
+                deal(deck, dHand, &deckPos);
+            }
    
+            showHands(pHand, dHand);
+        }
+        else if(gameStateCode == 1)
+            cout << "Player wins" << endl;
+        else if(gameStateCode == 2)
+            cout << "Dealer wins" << endl;
+        else if(gameStateCode == 3)
+            cout << "Dealer busts, player wins" << endl;
+        else if(gameStateCode == 4)
+            cout << "Player busts, dealer wins" << endl;
+        else
+            sleep(0);
+    }
+
+    delete[] pHand;
+    delete[] dHand;
+    delete[] deck;
+
     return 0;
 }
 
@@ -93,51 +140,53 @@ void print(int* hand, int i)
     string hearts = "\u2665";
     string spades = "\u2660";
 
-    if(hand[11] == 1 && i == 1) //handles obfuscation of dealer's top card using last element flag (line 24)
-        cout << " **";
-    else if(hand[i] != -1) 
+    if(hand[i] != -1) 
     {
-        if(hand[i] % 100 != 10) //handle spacing for face value 10 being two columns
-            cout << ' ';
-            
-        string displayFace;
-        switch(hand[i] % 100)
-        {
-            case 11:
-                displayFace = "J";
-                break;
-            case 12:
-                displayFace = "Q";
-                break;
-            case 13:
-                displayFace = "K";
-                break;
-            case 14:
-                displayFace = "A";
-                break;
-            default:
-                displayFace = to_string(hand[i] % 100); //to_string function learned from stackOverflow
-                break;
-        }
+        if(hand[11] == 1 && i == 1) //handles obfuscation of dealer's top card using last element flag (line 24)
+            cout << " **";
+        else 
+        {  
+            if(hand[i] % 100 != 10) //handle spacing for face value 10 being two columns
+                cout << ' ';
+            string displayFace;
+            switch(hand[i] % 100)
+            {
+                case 11:
+                    displayFace = "J";
+                    break;
+                case 12:
+                    displayFace = "Q";
+                    break;
+                case 13:
+                    displayFace = "K";
+                    break;
+                case 14:
+                    displayFace = "A";
+                    break;
+                default:
+                    displayFace = to_string(hand[i] % 100); //to_string function learned from stackOverflow
+                    break;
+            }
 
-        string displaySuit;
-        switch(hand[i] / 100)
-        {
-            case 1:
-                displaySuit = clubs;
-                break;
-            case 2:
-                displaySuit = diamonds;
-                break;
-            case 3:
-                displaySuit = hearts;
-                break;
-            case 4:
-                displaySuit = spades;
-                break;
-        }
+            string displaySuit;
+            switch(hand[i] / 100)
+            {
+                case 1:
+                    displaySuit = clubs;
+                    break;
+                case 2:
+                    displaySuit = diamonds;
+                    break;
+                case 3:
+                    displaySuit = hearts;
+                    break;
+                case 4:
+                    displaySuit = spades;
+                    break;
+            }
 
-        cout << displayFace << displaySuit;
+            cout << displayFace << displaySuit;
+        }
     }
     else
         cout << "   ";
@@ -161,7 +210,7 @@ void showHands(int* pHand, int* dHand)
     }
 }
 
-bool playRound(int* deck, int* pHand, int* dHand, int* deckPos, int* rounds, char* lastCmd, int* gameStateCode)
+void playRound(int* deck, int* pHand, int* dHand, int* deckPos, int* rounds, char* lastCmd, int* gameStateCode)
 {
     char cmd;
 
@@ -169,38 +218,72 @@ bool playRound(int* deck, int* pHand, int* dHand, int* deckPos, int* rounds, cha
     cin >> cmd;
     if(cmd == 'h')
         deal(deck, pHand, deckPos);
+    updateGameState(pHand, dHand, cmd, lastCmd, gameStateCode);
     showHands(pHand, dHand);
-    if(cmd == 's' && cmd == *lastCmd)
-     {
-        return 0;
-        dHand[11] = 0; //remove obfuscation flag
-    }
-       
+    updateGameState(pHand, dHand, cmd, lastCmd, gameStateCode);
+    if(*gameStateCode != -1)
+        return;
     *lastCmd = cmd;
+    
 
     cout << "Round " << *rounds << " Dealer's turn" << endl << "hit or stand ? [h/s] ";
-    
+   
     sleep(1);
-    if(getScore(dHand) < 17)
-        cmd = 'h';
-    else
-        cmd = 's';
+        if(getScore(dHand) < 17)
+            cmd = 'h';
+        else
+            cmd = 's';
     
     cout << cmd << endl;
 
     if(cmd == 'h')
         deal(deck, dHand, deckPos);
+    updateGameState(pHand, dHand, cmd, lastCmd, gameStateCode);
     showHands(pHand, dHand);
-    if(cmd == 's' && cmd == *lastCmd)
-    {
-        return 0;
-        dHand[11] = 0; //remove obfuscation flag
-    }
-        
+    if(*gameStateCode != -1)
+        return;
     *lastCmd = cmd;
+    
 
     (*rounds)++;
-    return(1);
+    return;
+}
+
+void updateGameState(int* pHand, int* dHand, char cmd, char* lastCmd, int* gameStateCode)
+{
+    if(cmd == 's' && cmd == *lastCmd)
+    {
+        dHand[11] = 0; //remove obfuscation flag
+        if((21 - getScore(dHand)) == (21 - getScore(pHand)))
+        {
+            *gameStateCode = 0;
+            return;
+        }
+        else if((21 - getScore(dHand)) > (21 - getScore(pHand)))
+        {
+            *gameStateCode = 1;
+            return;
+        }
+        else
+         {
+            *gameStateCode = 2;
+            return;
+        }
+    }
+    else if(getScore(dHand) > 21)
+    {
+        dHand[11] = 0; //remove obfuscation flag
+        *gameStateCode = 3;
+        return;
+    }
+    else if(getScore(pHand) > 21)
+    {
+        dHand[11] = 0; //remove obfuscation flag
+        *gameStateCode = 4;
+        return;
+    }
+    else
+        return;
 }
 
 int getScore(int* hand)
@@ -235,16 +318,4 @@ int getScore(int* hand)
         score = total;
 
     return score;
-}
-
-int updateGameState(int* pHand, int* dHand, char cmd, char* lastCmd, int* gameStateCode)
-{
-    if(cmd == 'h')
-        deal(deck, dHand, deckPos);
-    showHands(pHand, dHand);
-    if(cmd == 's' && cmd == *lastCmd)
-    {
-        return 0;
-        dHand[11] = 0; //remove obfuscation flag
-    }
 }

@@ -21,15 +21,16 @@ int main(){
         return 1;
     }
 
+    //create, read in list data
     Node* list = NULL;
     Pair P;
-
     while(fin >> P)
         list = add2front(list, P);
 
-    cout << "count is " << count(list) << endl;
-    printList(list);
-    cout << endl;
+    //lets user crawl through list
+    crawlList(list, list);
+
+    //clean up & exit
     deleteList(list);
     return 0;
 }

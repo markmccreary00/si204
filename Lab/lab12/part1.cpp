@@ -17,7 +17,7 @@ int main(){
 
     ifstream fin(filename);
     if(!fin){
-        cout << "Error: File '" << filename <<"' not found!'" << endl;
+        cout << "Error! File '" << filename <<"' not found!" << endl;
         return 1;
     }
 
@@ -27,8 +27,8 @@ int main(){
     while(fin >> P)
         list = add2front(list, P);
 
-    cout << "count is " << count(list) << endl;
-    printList(list);
+    cout << "Count is " << count(list, NULL) << endl;
+    print(list, NULL);
     cout << endl;
     deleteList(list);
     return 0;

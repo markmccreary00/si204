@@ -1,5 +1,5 @@
 /*
-Filename: part1.cpp
+Filename: p1.cpp
 Author: MIDN Mark McCreary (274230)
 Project 3, Part 1
 */
@@ -13,7 +13,7 @@ Project 3, Part 1
 using namespace std;
 
 struct board{
-    int height, width, z_count;
+    int height, width, spawn_count;
     char** map;
 };
 
@@ -26,7 +26,7 @@ void getBoard(string filename, board &current){
     }
 
     char dump;
-    fin >> current.height >> dump >> current.width >> current.z_count;
+    fin >> current.height >> dump >> current.width >> current.spawn_count;
    
     current.map = new char*[current.height];
     for(int i = 0 ; i < current.height ; i++) {
@@ -36,7 +36,6 @@ void getBoard(string filename, board &current){
     for(int i = 0 ; i < current.height ; i++){
         for(int j = 0 ; j < current.width ; j++){
             current.map[i][j] = fin.get();
-            dump = fin.get();
         }
     }
 }
@@ -50,6 +49,8 @@ int main(){
     getBoard(filename, current);
 
     startCurses();
+    int row, col;
+    getWindowDimensions(row, col);
 
     for(int i = 0 ; i < current.height ; i++){
         for(int j = 0 ; j < current.width ; j++){

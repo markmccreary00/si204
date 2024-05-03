@@ -7,21 +7,27 @@ using namespace std;
 struct Pair{
     string val;
     int num;
+    int valid;
 };
 
 struct Node{
   Pair data;
   Node* next;
-  bool valid;
 };
 
 Node* add2front(Node* oldList, Pair P);
 istream& operator>> (istream& in, Pair& P);
 
 int count(Node* list, Node* stop);
+
 void print(Node* list, Node* stop);
-void endPrint(Node* list);
-void crawlList(Node* current, Node* list);
+void printJustWords(Node* list, Node* stop);
+
+int endScore(Node* list);
+
+void crawlList_p2(Node* current, Node* list);
+void crawlList_p3(Node* current, Node* list);
+void crawlList_p4(Node* current, Node* list);
 
 Node* deleteFront(Node* list);
 void deleteList(Node* list);

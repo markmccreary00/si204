@@ -57,11 +57,6 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
-    "iostream": "cpp",
-    "array": "cpp",
-    "string": "cpp",
-    "string_view": "cpp",
-    "ranges": "cpp",
-    "new": "cpp"
+    "*.tcc": "cpp"
   }
 }

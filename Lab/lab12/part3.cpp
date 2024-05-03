@@ -1,7 +1,7 @@
 /*
-Filename: part2.cpp
+Filename: part3.cpp
 Author: MIDN Mark A. McCreary (274230)
-Lab 12, Part 2
+Lab 12, Part 3
 */
 
 #include <fstream>
@@ -29,7 +29,8 @@ int main(){
 
     //lets user crawl through list
     cout << endl;
-    crawlList_p2(list, list);
+    crawlList_p3(list, list);
+
 
     //clean up & exit
     deleteList(list);

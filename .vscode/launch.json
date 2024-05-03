@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/mids/m274230/si204/Homework/hw32",
-      "program": "/home/mids/m274230/si204/Homework/hw32/build/Debug/outDebug",
+      "cwd": "/home/mids/m274230/si204/Homework/hw34",
+      "program": "/home/mids/m274230/si204/Homework/hw34/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

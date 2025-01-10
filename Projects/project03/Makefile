@@ -1,7 +1,7 @@
 part1: 
-	g++ part1.cpp easycurses.cpp -l ncurses -o part1
+	g++ part1.cpp easycurses.cpp myLib.cpp -l ncurses -o part1
 part2: 
-
+	g++ part2.cpp easycurses.cpp myLib.cpp Pos.cpp -l ncurses -o part2
 part3: 
 	
 part4: 
